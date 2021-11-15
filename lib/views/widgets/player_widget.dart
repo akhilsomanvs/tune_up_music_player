@@ -126,11 +126,11 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Flume',
+                            widget.songName,
                             style: TextStyle(fontSize: 16.sp(), fontWeight: FontWeight.w600),
                           ),
                           Text(
-                            'Say It',
+                            widget.albumName,
                             style: TextStyle(fontSize: 12.sp(), color: colorGreyText),
                           ),
                           Expanded(flex: 1, child: Container()),

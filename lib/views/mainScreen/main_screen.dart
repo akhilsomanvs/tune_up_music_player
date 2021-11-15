@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tune_up/arch_utils/utils/size_config.dart';
 import 'package:tune_up/arch_utils/widgets/responsize_builder.dart';
+import 'package:tune_up/views/widgets/player_widget.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
@@ -19,7 +20,18 @@ class MainScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: SizedBox(
               height: usableHeight,
-              child: Container(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(child: Container()),
+                  PlayerWidget(
+                    songName: 'Flume',
+                    albumName: 'Say It',
+                  ),
+                ],
+              ),
             ),
           );
         },

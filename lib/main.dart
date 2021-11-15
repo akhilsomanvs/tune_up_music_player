@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tune_up/controllers/player_controller.dart';
 import 'package:tune_up/views/mainScreen/main_screen.dart';
 
 void main() {
@@ -10,6 +12,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(PlayerController());
     return MaterialApp(
       title: 'Tune Up',
       theme: ThemeData(

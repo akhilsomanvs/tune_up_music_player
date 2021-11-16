@@ -26,7 +26,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    controller.getSongsFromDevice();
     return Scaffold(
       body: ResponsiveBuilder(
         builder: (context, sizingInformation) {

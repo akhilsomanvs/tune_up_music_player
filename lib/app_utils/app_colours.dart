@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-// Color colorPageBackground = const Color(0xFFECBDA6);
-Color colorMainLight = const Color(0xFFFE8F72);
-Color colorMainDark = const Color(0xFFFF734D);
-Color colorFooter = const Color(0xFF282634);
-// Color colorGreyText = const Color(0xFF7F7D86);
-
-Color colorAppPrimary = const Color(0xFFfcf1f5);
-Color colorAppPrimaryWhite = const Color(0xFFfffdff);
+//region App Colors
+Color colorAppPrimary = const Color(0xFF181C26);
+Color colorAppPrimaryWhite = const Color(0xFFFCFCFE);
 Color colorPageBackground = const Color(0xFFfcf1f5);
 Color colorAppPink = const Color(0xFFFFE9E9);
 Color colorAppMusicDetailsContainer = const Color(0xFFfcf1f5);
@@ -17,7 +12,7 @@ Color colorAppProgressIndicator = const Color(0xFFff3367);
 //endregion
 
 //region Text Colors
-Color colorPrimaryText = const Color(0xFF242E42);
+Color colorPrimaryText = const Color(0xFFFCFCFE);
 Color colorSecondaryText = const Color(0xFF706A6A);
 Color colorBlackText = const Color(0xFF4B4B4B);
 Color colorDisabledText = const Color(0xFFCFCFCF);
@@ -28,6 +23,8 @@ Color colorGreenText = const Color(0xFF75B687);
 //endregion
 
 //region Button Colors
-Color colorEnabledButton = const Color(0xFF2E353A);
-Color colorDisabledButton = const Color(0xFFB8B8B8);
+Color colorPrimaryButton = const Color(0xFFFCFCFE);
+Color colorSecondaryButton = const Color(0xFF212632);
 //endregion
+
+

@@ -72,7 +72,7 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double bottomPadding = SizeConfig.getBottomScreenPadding(); // + SizeConfig.getVerticalSize(12);
+    double bottomPadding = SizeConfig.getBottomScreenPadding() + SizeConfig.getVerticalSize(12);
     return Stack(
       children: [
         ///
@@ -93,66 +93,9 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
                   child: child,
                 );
               },
-              child: Container(
-                width: double.infinity,
-                height: 110.vdp(),
-                padding: EdgeInsets.symmetric(
-                  vertical: 12.vdp(),
-                  horizontal: 12.hdp(),
-                ),
-                decoration: BoxDecoration(
-                  color: colorPageBackground.withOpacity(1.0),
-                  // color: Colors.red,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(12.vdp()),
-                    topLeft: Radius.circular(12.vdp()),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      offset: const Offset(0, -5),
-                      blurRadius: 15,
-                      spreadRadius: 1,
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Expanded(flex: 4, child: Container()),
-                    Expanded(
-                      flex: 6,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            widget.songName,
-                            style: TextStyle(fontSize: 16.sp(), fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            widget.albumName,
-                            style: TextStyle(fontSize: 12.sp(), color: colorGreyText),
-                          ),
-                          Expanded(flex: 1, child: Container()),
-                          AnimatedBuilder(
-                            animation: progressAnimation,
-                            builder: (context, child) {
-                              return ClipRRect(
-                                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                child: LinearProgressIndicator(
-                                  color: colorAppProgressIndicator,
-                                  backgroundColor: colorAppPrimaryWhite,
-                                  value: progressAnimation.value,
-                                ),
-                              );
-                            },
-                          ),
-                          Expanded(flex: 2, child: Container()),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              child: slideUpContainerWidget(
+                widget.songName,
+                albumName: widget.albumName,
               ),
             ),
           ),
@@ -163,77 +106,7 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
         ///
         Padding(
           padding: EdgeInsets.only(top: 80.vdp()),
-          child: Container(
-            // height: SizeConfig.getVerticalSize(100),
-            padding: EdgeInsets.only(
-              left: 12.hdp(),
-              right: 12.hdp(),
-              top: 12.vdp(),
-              bottom: bottomPadding,
-            ),
-            decoration: BoxDecoration(
-              color: colorAppPrimaryWhite,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(12.vdp()),
-                topLeft: Radius.circular(12.vdp()),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
-                  offset: const Offset(0, -5),
-                  blurRadius: 5,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Flexible(flex: 4, child: Container()),
-                Flexible(
-                  flex: 2,
-                  child: PlayerIcon(
-                    icon: Icons.skip_previous,
-                    onTap: (isActive) {
-                      if (widget.onPrevButtonTap != null) {
-                        widget.onPrevButtonTap!();
-                      }
-                    },
-                  ),
-                ),
-                HSpace(8),
-                Flexible(
-                  flex: 2,
-                  child: PlayerIcon(
-                    icon: Icons.play_arrow,
-                    activeIcon: Icons.pause,
-                    canBeActive: true,
-                    isActive: controller.isPlaying.value,
-                    onTap: (isActive) {
-                      controller.setIsPlaying(isActive);
-                      triggerRecordAnimation(isActive);
-                      if (widget.onPlayButtonTap != null) {
-                        widget.onPlayButtonTap!(isActive);
-                      }
-                    },
-                  ),
-                ),
-                HSpace(8),
-                Flexible(
-                  flex: 2,
-                  child: PlayerIcon(
-                    icon: Icons.skip_next,
-                    onTap: (isActive) {
-                      if (widget.onNextButtonTap != null) {
-                        widget.onNextButtonTap!();
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child: miniMusicPlayer(bottomPadding),
         ),
 
         ///
@@ -295,6 +168,145 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
       ],
     );
   }
+
+  //region Widget methods
+  miniMusicPlayer(double bottomPadding){
+    return Container(
+      // height: SizeConfig.getVerticalSize(100),
+      padding: EdgeInsets.only(
+        left: 12.hdp(),
+        right: 12.hdp(),
+        top: 12.vdp(),
+        bottom: bottomPadding,
+      ),
+      decoration: BoxDecoration(
+        color: colorAppPrimaryWhite,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(12.vdp()),
+          topLeft: Radius.circular(12.vdp()),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            offset: const Offset(0, -5),
+            blurRadius: 5,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Flexible(flex: 4, child: Container()),
+          Flexible(
+            flex: 2,
+            child: PlayerIcon(
+              icon: Icons.skip_previous,
+              onTap: (isActive) {
+                if (widget.onPrevButtonTap != null) {
+                  widget.onPrevButtonTap!();
+                }
+              },
+            ),
+          ),
+          HSpace(8),
+          Flexible(
+            flex: 2,
+            child: PlayerIcon(
+              icon: Icons.play_arrow,
+              activeIcon: Icons.pause,
+              canBeActive: true,
+              isActive: controller.isPlaying.value,
+              onTap: (isActive) {
+                controller.setIsPlaying(isActive);
+                triggerRecordAnimation(isActive);
+                if (widget.onPlayButtonTap != null) {
+                  widget.onPlayButtonTap!(isActive);
+                }
+              },
+            ),
+          ),
+          HSpace(8),
+          Flexible(
+            flex: 2,
+            child: PlayerIcon(
+              icon: Icons.skip_next,
+              onTap: (isActive) {
+                if (widget.onNextButtonTap != null) {
+                  widget.onNextButtonTap!();
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  slideUpContainerWidget(String songName,{String albumName=""}){
+    return Container(
+      width: double.infinity,
+      height: 110.vdp(),
+      padding: EdgeInsets.symmetric(
+        vertical: 12.vdp(),
+        horizontal: 12.hdp(),
+      ),
+      decoration: BoxDecoration(
+        color: colorAppPrimaryWhite,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(12.vdp()),
+          topLeft: Radius.circular(12.vdp()),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: colorAppPrimaryWhite.withOpacity(0.3),
+            offset: const Offset(0, -5),
+            blurRadius: 15,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(flex: 4, child: Container()),
+          Expanded(
+            flex: 6,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  songName,
+                  style: TextStyle(fontSize: 16.sp(), fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  albumName,
+                  style: TextStyle(fontSize: 12.sp(), color: colorGreyText),
+                ),
+                Expanded(flex: 1, child: Container()),
+                AnimatedBuilder(
+                  animation: progressAnimation,
+                  builder: (context, child) {
+                    return ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                      child: LinearProgressIndicator(
+                        color: colorAppPrimary,
+                        backgroundColor: colorAppPrimaryWhite,
+                        value: progressAnimation.value,
+                      ),
+                    );
+                  },
+                ),
+                Expanded(flex: 2, child: Container()),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  //endregion
 
   void triggerRecordAnimation(bool isActive) {
     if (isActive) {
@@ -372,7 +384,7 @@ class _PlayerIconState extends State<PlayerIcon> {
           ),
           child: Icon(
             widget.activeIcon == null ? widget.icon : (isPressed ? widget.activeIcon : widget.icon),
-            color: isPressed ? colorAppPrimaryWhite :colorAppGrey,
+            color: isPressed ? colorAppPrimaryWhite : colorAppGrey,
           ),
         ),
       ),

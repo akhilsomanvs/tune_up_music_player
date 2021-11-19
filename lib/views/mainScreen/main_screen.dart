@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tune_up/app_utils/app_colours.dart';
 import 'package:tune_up/arch_utils/utils/size_config.dart';
 import 'package:tune_up/arch_utils/widgets/responsize_builder.dart';
 import 'package:tune_up/controllers/songs_controller.dart';
@@ -26,30 +27,49 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return Scaffold(
-      body: ResponsiveBuilder(
-        builder: (context, sizingInformation) {
-          if (usableHeight < sizingInformation.localWidgetSize.height) {
-            usableHeight = sizingInformation.localWidgetSize.height;
-          }
-          return SingleChildScrollView(
-            child: SizedBox(
-              height: usableHeight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(child: Container()),
-                  PlayerWidget(
-                    songName: 'Flume',
-                    albumName: 'Say It',
-                  ),
-                ],
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor: colorAppPrimary,
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(child: Text("Songs"),),
+              Tab(child: Text("Playlist"),),
+            ],
+          ),
+        ),
+        body: ResponsiveBuilder(
+          builder: (context, sizingInformation) {
+            if (usableHeight < sizingInformation.localWidgetSize.height) {
+              usableHeight = sizingInformation.localWidgetSize.height;
+            }
+            return SingleChildScrollView(
+              child: SizedBox(
+                height: usableHeight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          Container(),
+                          Container(),
+                        ],
+                      ),
+                    ),
+                    PlayerWidget(
+                      songName: 'Flume',
+                      albumName: 'Say It',
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

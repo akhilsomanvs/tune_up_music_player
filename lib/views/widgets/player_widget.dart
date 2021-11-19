@@ -115,54 +115,7 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
         Positioned.fill(
           child: Padding(
             padding: EdgeInsets.only(bottom: bottomPadding),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  flex: 4,
-                  child: AnimatedBuilder(
-                    animation: scaleAnimation,
-                    child: AnimatedBuilder(
-                      animation: rotationAnimation,
-                      child: Container(
-                        width: 110.vdp(),
-                        height: 110.vdp(),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
-                          image: DecorationImage(image: AssetImage(AppAssets.getImagePath("album_placeholder.png")), fit: BoxFit.contain),
-                        ),
-                        child: Center(
-                          child: Container(
-                            width: 24.vdp(),
-                            height: 24.vdp(),
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(300), color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      builder: (context, child) {
-                        return Transform.rotate(
-                          angle: rotationAnimation.value,
-                          alignment: Alignment.center,
-                          child: child,
-                        );
-                      },
-                    ),
-                    builder: (context, child) {
-                      return Transform.scale(
-                        scale: scaleAnimation.value,
-                        alignment: Alignment.bottomCenter,
-                        child: child,
-                      );
-                    },
-                  ),
-                ),
-                Expanded(
-                  flex: 5,
-                  child: Container(),
-                )
-              ],
-            ),
+            child: recordPlayerWidget(),
           ),
         ),
       ],
@@ -172,7 +125,6 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
   //region Widget methods
   miniMusicPlayer(double bottomPadding){
     return Container(
-      // height: SizeConfig.getVerticalSize(100),
       padding: EdgeInsets.only(
         left: 12.hdp(),
         right: 12.hdp(),
@@ -304,6 +256,57 @@ class _PlayerWidgetState extends State<PlayerWidget> with TickerProviderStateMix
           ),
         ],
       ),
+    );
+  }
+
+  recordPlayerWidget(){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          flex: 4,
+          child: AnimatedBuilder(
+            animation: scaleAnimation,
+            child: AnimatedBuilder(
+              animation: rotationAnimation,
+              child: Container(
+                width: 110.vdp(),
+                height: 110.vdp(),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red,
+                  image: DecorationImage(image: AssetImage(AppAssets.getImagePath("album_placeholder.png")), fit: BoxFit.contain),
+                ),
+                child: Center(
+                  child: Container(
+                    width: 24.vdp(),
+                    height: 24.vdp(),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(300), color: Colors.white),
+                  ),
+                ),
+              ),
+              builder: (context, child) {
+                return Transform.rotate(
+                  angle: rotationAnimation.value,
+                  alignment: Alignment.center,
+                  child: child,
+                );
+              },
+            ),
+            builder: (context, child) {
+              return Transform.scale(
+                scale: scaleAnimation.value,
+                alignment: Alignment.bottomCenter,
+                child: child,
+              );
+            },
+          ),
+        ),
+        Expanded(
+          flex: 5,
+          child: Container(),
+        )
+      ],
     );
   }
   //endregion

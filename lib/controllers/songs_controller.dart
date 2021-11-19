@@ -6,6 +6,7 @@ class SongsController extends GetxController {
   final OnAudioQuery _audioQuery = OnAudioQuery();
 
   List<SongModel> _songsList = [];
+
   List<SongModel> get songsList => _songsList;
 
   Future<bool> requestPermission() async {
@@ -15,6 +16,13 @@ class SongsController extends GetxController {
       if (!permissionStatus) {
         return await _audioQuery.permissionsRequest();
       }
+    }
+    return false;
+  }
+
+  Future<bool> getStoragePermissionStatus() async {
+    if (!kIsWeb) {
+      return await _audioQuery.permissionsStatus();
     }
     return false;
   }
